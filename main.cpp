@@ -2,144 +2,205 @@
 #include <string>
 
 // Constante global que indicara el tamaño maximo de los arreglos
-const int max_Productos = 100;
+const int maximos_Productos = 100;
 
 // Inicializacion de los arreglos paralelos
-int cod_Productos[max_Productos];
-std::string nom_Productos[max_Productos];
-int cant_Stock[max_Productos];
-float precio_Unit[max_Productos];
+int codigo_Productos[maximos_Productos];
+std::string nombres_Productos[maximos_Productos];
+int cantidad_Stock[maximos_Productos];
+float precio_Unitario[maximos_Productos];
 
 // Contador de cuantos productos se llevan
-int cont_Productos = 0;
+int contador_Productos = 0;
 
 // Cargar los 5 productos base en venta
 void datosIniciales()
 {
     // Producto 0
-    cod_Productos[0] = 101;
-    nom_Productos[0] = "Martillo";
-    cant_Stock[0] = 50;
-    precio_Unit[0] = 34.50f;
+    codigo_Productos[0] = 101;
+    nombres_Productos[0] = "Martillo";
+    cantidad_Stock[0] = 50;
+    precio_Unitario[0] = 34.50f;
 
     // Producto 1
-    cod_Productos[1] = 102;
-    nom_Productos[1] = "Destornillador";
-    cant_Stock[1] = 45;
-    precio_Unit[1] = 37.65f;
+    codigo_Productos[1] = 102;
+    nombres_Productos[1] = "Destornillador";
+    cantidad_Stock[1] = 45;
+    precio_Unitario[1] = 37.65f;
 
     // Producto 2
-    cod_Productos[2] = 103;
-    nom_Productos[2] = "Llave Allen";
-    cant_Stock[2] = 70;
-    precio_Unit[2] = 21.76f;
+    codigo_Productos[2] = 103;
+    nombres_Productos[2] = "Llave Allen";
+    cantidad_Stock[2] = 70;
+    precio_Unitario[2] = 21.76f;
 
     // Producto 3
-    cod_Productos[3] = 104;
-    nom_Productos[3] = "Bolsa de Clavos de 1 1/2";
-    cant_Stock[3] = 60;
-    precio_Unit[3] = 10.45f;
+    codigo_Productos[3] = 104;
+    nombres_Productos[3] = "Bolsa de Clavos de 1 1/2";
+    cantidad_Stock[3] = 60;
+    precio_Unitario[3] = 10.45f;
 
     // Producto 4
-    cod_Productos[4] = 105;
-    nom_Productos[4] = "Martillo de Goma";
-    cant_Stock[4] = 30;
-    precio_Unit[4] = 50.99f;
+    codigo_Productos[4] = 105;
+    nombres_Productos[4] = "Martillo de Goma";
+    cantidad_Stock[4] = 30;
+    precio_Unitario[4] = 50.99f;
 
-    cont_Productos = 5;
+    contador_Productos = 5;
 }
 
 // Prototipos de funciones
-void consProducto();
-void actInventario();
-void genReporte();
-void busProductoCaro();
+void consultarProducto();
+void actualizarInventario();
+void generarReporte();
+void buscarProductoMasCaro();
 
 int main()
 {
+    // Inicializar los datos pŕincipales
     datosIniciales();
 
-    int op;
+    int opcion;
     do
     {
-        std::cout << "--- SISTEMA DE INVENTARIO DE LA FERRETERIA EL MARTILLO ---\n";
+        std::cout << "--- SISTEMA DE INVENTARIO DE LA FERRETERIA EL MARTILLO --- \n";
         std::cout << "Seleccione una opción: \n";
         std::cout << "1. Consultar un Producto \n";
         std::cout << "2. Actualizar el Inventario \n";
         std::cout << "3. Generar Reporte Completo \n";
         std::cout << "4. Encontrar el Producto mas Caro \n";
         std::cout << "5. Salir \n";
-        std::cout << "Opción Seleccionada: \n";
+        std::cout << "Opción Seleccionada: \n\n";
 
-        std::cin >> op;
+        std::cin >> opcion;
 
-        switch (op)
+        switch (opcion)
         {
         case 1:
-            consProducto();
+            consultarProducto();
             break;
         case 2:
-            actInventario();
+            actualizarInventario();
             break;
         case 3:
-            genReporte();
+            generarReporte();
             break;
         case 4:
-            busProductoCaro();
+            buscarProductoMasCaro();
+            break;
+        case 5:
+            std::cout << "Bye bye\n";
             break;
 
         default:
-            if (op != 0 || op > 4)
-            {
-                std::cout << "\nOpcion incorrecta. Intente de nuevo.\n";
-            }
+            std::cout << "\nOpcion incorrecta. Intente de nuevo.\n";
             break;
         }
-    } while (op != 5);
+    } while (opcion != 5);
 
-    std::cout << "Bye bye\n";
     return 0;
 }
 
-void consProducto()
+// Funcion para hacer la consulta de un producto
+void consultarProducto()
 {
-    int codigoBus;
+    int codigoBuscado;
 
     std::cout << "Ingrese el código del producto a buscar: ";
-    std::cin >> codigoBus;
+    std::cin >> codigoBuscado;
 
     // Variable bandera para saber si se ha encontrado el producto
-    bool prod_Encontrado = false;
+    bool producto_Encontrado = false;
 
-    for (int i = 0; i < cont_Productos; i++)
+    for (int i = 0; i < contador_Productos; i++)
     {
-        if (cod_Productos[i] == codigoBus)
+        if (codigo_Productos[i] == codigoBuscado)
         {
-            std::cout << "\n--- Información del Producto ---\n";
-            std::cout << "Código: " << cod_Productos[i] << "\n";
-            std::cout << "Nombre: " << nom_Productos[i] << "\n";
-            std::cout << "Cantidad en stock: " << cant_Stock[i] << "\n";
-            std::cout << "Precio unitario: $" << precio_Unit[i] << "\n\n";
+            std::cout << "\n ----- Información del Producto ----- \n";
+            std::cout << "Código: " << codigo_Productos[i] << "\n";
+            std::cout << "Nombre: " << nombres_Productos[i] << "\n";
+            std::cout << "Cantidad en stock: " << cantidad_Stock[i] << "\n";
+            std::cout << "Precio unitario: $" << precio_Unitario[i] << "\n\n";
 
-            prod_Encontrado = true;
+            producto_Encontrado = true;
             break;
         }
     }
 
-    if (!prod_Encontrado)
+    if (!producto_Encontrado)
     {
-        std::cout << "El código de producto " << codigoBus << " no existe \n\n";
+        std::cout << "El código de producto " << codigoBuscado << " no existe \n\n";
     }
 }
 
-void actInventario()
+// Funcion para actualizar el inventario de un producto
+void actualizarInventario()
 {
+    int codigo_Buscado;
+
+    std::cout << "Ingrese el código del producto a buscar: ";
+    std::cin >> codigo_Buscado;
+
+    bool producto_Encontrado = false;
+
+    for (int i = 0; i < contador_Productos; i++)
+    {
+        if (codigo_Productos[i] == codigo_Buscado)
+        {
+            int cantidad_Actualizar;
+            std::cout << "El producto a actualizar es: " << nombres_Productos[i] << " \n";
+            std::cout << "¿Cuál es la cantidad a sumar o restar (para restar poner un (-) antes del numero): ";
+            std::cin >> cantidad_Actualizar;
+
+            int nuevo_Stock = cantidad_Stock[i] + cantidad_Actualizar;
+
+            if (nuevo_Stock >= 0)
+            {
+                cantidad_Stock[i] = nuevo_Stock;
+                std::cout << "Inventario actualizado, el nuevo stock es: " << cantidad_Stock[i] << " \n\n";
+            }
+            else
+            {
+                std::cout << "Hay un error, el stock quedaria en negativo " << nuevo_Stock << " , no se realizó el cambio \n";
+            }
+
+            producto_Encontrado = true;
+            break;
+        }
+    }
+
+    if (!producto_Encontrado)
+    {
+        std::cout << "El código de producto " << codigo_Buscado << " no existe \n\n";
+    }
 }
 
-void genReporte()
+// Funcion para generar el reporte de inventario
+void generarReporte()
 {
+    std::cout << "\n ----- Reporte de Inventario ----- \n";
+    std::cout << "| Código | " << "Nombre | " << "Stock | " << "Precio |" << " \n";
+
+    for (int i = 0; i < contador_Productos; i++)
+    {
+        std::cout << "| " << codigo_Productos[i] << " | " << nombres_Productos[i] << " | " << cantidad_Stock[i] << " | $" << precio_Unitario[i] << " | \n\n";
+    }
 }
 
-void busProductoCaro()
+void buscarProductoMasCaro()
 {
+    float precio_MasAlto = precio_Unitario[0];
+    int indice_DelMasAlto = 0;
+
+    for (int i = 1; i < contador_Productos; i++)
+    {
+        if (precio_Unitario[i] > precio_MasAlto)
+        {
+            precio_MasAlto = precio_Unitario[i];
+            indice_DelMasAlto = i;
+        }
+    }
+
+    std::cout << "\nEl producto más caro es: " << nombres_Productos[indice_DelMasAlto]
+              << " y su precio es $" << precio_MasAlto << " \n\n";
 }
